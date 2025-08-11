@@ -1,11 +1,14 @@
 pipeline {
     agent any
 
-    environment {
-        ARTIFACT_NAME = 'app.zip'
-        AZURE_WEBAPP_NAME = 'luckywebapp'
-        AZURE_RESOURCE_GROUP = 'lucky'
-    }
+    tools [
+        nodejs 'NodeJS'
+    ]
+    // environment {
+    //     ARTIFACT_NAME = 'app.zip'
+    //     AZURE_WEBAPP_NAME = 'luckywebapp'
+    //     AZURE_RESOURCE_GROUP = 'lucky'
+    // }
 
     stages {
         stage('Checkout from Git') {
@@ -32,38 +35,38 @@ pipeline {
             }
         }
 
-        stage('Download Artifact') {
-            steps {
-                copyArtifacts(
-                    projectName: 'pipeline11',
-                    filter: ARTIFACT_NAME,
-                    fingerprintArtifacts: true
-                )
-            }
-        }
+        // stage('Download Artifact') {
+        //     steps {
+        //         copyArtifacts(
+        //             projectName: 'pipeline11',
+        //             filter: ARTIFACT_NAME,
+        //             fingerprintArtifacts: true
+        //         )
+        //     }
+        // }
 
-        stage('Login to Azure') {
-            steps {
-                withCredentials([
-                    usernamePassword(credentialsId: 'azure-sp', usernameVariable: 'AZURE_APP_ID', passwordVariable: 'AZURE_PASSWORD'),
-                    string(credentialsId: 'azure-tenant', variable: 'AZURE_TENANT')
-                ]) {
-                    sh "az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT"
-                }
-            }
-        }
+        // stage('Login to Azure') {
+        //     steps {
+        //         withCredentials([
+        //             usernamePassword(credentialsId: 'azure-sp', usernameVariable: 'AZURE_APP_ID', passwordVariable: 'AZURE_PASSWORD'),
+        //             string(credentialsId: 'azure-tenant', variable: 'AZURE_TENANT')
+        //         ]) {
+        //             sh "az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT"
+        //         }
+        //     }
+        // }
 
-        stage('Deploy to Azure Web App') {
-            steps {
-                sh '''
-                    echo "Deploying $ARTIFACT_NAME to Azure Web App: $AZURE_WEBAPP_NAME"
-                    az webapp deployment source config-zip \
-                      --resource-group $AZURE_RESOURCE_GROUP \
-                      --name $AZURE_WEBAPP_NAME \
-                      --src $ARTIFACT_NAME
-                '''
-            }
-        }
+        // stage('Deploy to Azure Web App') {
+        //     steps {
+        //         sh '''
+        //             echo "Deploying $ARTIFACT_NAME to Azure Web App: $AZURE_WEBAPP_NAME"
+        //             az webapp deployment source config-zip \
+        //               --resource-group $AZURE_RESOURCE_GROUP \
+        //               --name $AZURE_WEBAPP_NAME \
+        //               --src $ARTIFACT_NAME
+        //         '''
+        //     }
+        // }
     }
 }
 
