@@ -35,26 +35,26 @@ pipeline {
             }
         }
 
-        // stage('Download Artifact') {
-        //     steps {
-        //         copyArtifacts(
-        //             projectName: 'pipeline11',
-        //             filter: ARTIFACT_NAME,
-        //             fingerprintArtifacts: true
-        //         )
-        //     }
-        // }
+        stage('Download Artifact') {
+            steps {
+                copyArtifacts(
+                    projectName: 'pipeline11',
+                    filter: ARTIFACT_NAME,
+                    fingerprintArtifacts: true
+                )
+            }
+        }
 
-        // stage('Login to Azure') {
-        //     steps {
-        //         withCredentials([
-        //             usernamePassword(credentialsId: 'azure-sp', usernameVariable: 'AZURE_APP_ID', passwordVariable: 'AZURE_PASSWORD'),
-        //             string(credentialsId: 'azure-tenant', variable: 'AZURE_TENANT')
-        //         ]) {
-        //             sh "az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT"
-        //         }
-        //     }
-        // }
+        stage('Login to Azure') {
+            steps {
+                withCredentials([
+                    usernamePassword(credentialsId: 'azure-sp', usernameVariable: 'AZURE_APP_ID', passwordVariable: 'AZURE_PASSWORD'),
+                    string(credentialsId: 'azure-tenant', variable: 'AZURE_TENANT')
+                ]) {
+                    sh "az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT"
+                }
+            }
+        }
 
         // stage('Deploy to Azure Web App') {
         //     steps {
