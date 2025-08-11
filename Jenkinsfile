@@ -38,7 +38,7 @@ pipeline {
         stage('Download Artifact') {
             steps {
                 copyArtifacts(
-                    projectName: 'pipeline11',
+                    projectName: 'node-js',
                     filter: ARTIFACT_NAME,
                     fingerprintArtifacts: true
                 )
