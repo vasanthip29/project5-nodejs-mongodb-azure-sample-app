@@ -4,11 +4,11 @@ pipeline {
     tools {
         nodejs 'NodeJS'
     }
-    // environment {
-    //     ARTIFACT_NAME = 'app.zip'
-    //     AZURE_WEBAPP_NAME = 'luckywebapp'
-    //     AZURE_RESOURCE_GROUP = 'lucky'
-    // }
+    environment {
+        ARTIFACT_NAME = 'app.zip'
+        AZURE_WEBAPP_NAME = 'luckywebapp'
+        AZURE_RESOURCE_GROUP = 'lucky'
+    }
 
     stages {
         stage('Checkout from Git') {
