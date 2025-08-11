@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    tools [
+    tools {
         nodejs 'NodeJS'
-    ]
+    }
     // environment {
     //     ARTIFACT_NAME = 'app.zip'
     //     AZURE_WEBAPP_NAME = 'luckywebapp'
@@ -69,9 +69,3 @@ pipeline {
         // }
     }
 }
-
-
-
-
-
-          
